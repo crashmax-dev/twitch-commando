@@ -28,7 +28,7 @@ class TwitchChatUser
      */
     get name()
     {
-        return this.originalMessage["display_name"];
+        return this.originalMessage["display-name"];
     }
 
 
