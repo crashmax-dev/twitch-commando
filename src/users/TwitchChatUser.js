@@ -148,7 +148,18 @@ class TwitchChatUser
      */
     get isBroadcaster()
     {
-        return (this.badges != undefined  && this.badges.broadcaster == '1');
+        return (this.badges != undefined && this.badges.broadcaster == '1');
+    }
+
+    /**
+     * Check if user is the channel moderator
+     * 
+     * @returns {Boolean} True if the user is the moderator
+     * @readonly
+     * @memberof TwitchChatUser
+     */
+     get isModerator() {
+        return (this.badges != undefined && this.badges.moderator == '1');
     }
 }
 
