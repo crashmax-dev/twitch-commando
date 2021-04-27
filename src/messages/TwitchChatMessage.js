@@ -142,7 +142,7 @@ class TwitchChatMessage
         if (this.messageType == 'whisper')
             return this.client.whisper(this.author.username, text);
         else
-            return this.client.say(this.channel.name, `@${this.author.username}, ${text}`, addRamndomEmote);
+            return this.client.say(this.channel.name, `@${this.author.name}, ${text}`, addRamndomEmote);
     }
 
 
@@ -156,7 +156,7 @@ class TwitchChatMessage
      */
     async actionReply(text, addRamndomEmote = false)
     {
-        return this.client.action(this.channel.name, `@${this.author.username}, ${text}`, addRamndomEmote);
+        return this.client.action(this.channel.name, `@${this.author.name}, ${text}`, addRamndomEmote);
     }
 
 
