@@ -371,6 +371,10 @@ class TwitchCommandoClient extends EventEmitter {
   async onMessage(channel, userstate, messageText, self) {
     if (self) return;
 
+    if (userstate.username == this.tmi.getUsername()) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+
     var message = new TwitchChatMessage(userstate, channel, this);
 
     if (this.verboseLogging) this.logger.info(message);
