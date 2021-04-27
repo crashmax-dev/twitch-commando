@@ -158,6 +158,20 @@ class TwitchChatMessage
     {
         return this.client.action(this.channel.name, `@${this.author.username} ${text}`, addRamndomEmote);
     }
+
+
+    /**
+     * Helper method to a message with an action
+     *
+     * @async
+     * @param {String} text
+     * @param {Boolean} addRandomEmote Add random emote to avoid message duplication
+     * @memberof TwitchChatMessage
+     */
+    async action(text, addRamndomEmote = false)
+    {
+        return this.client.action(this.channel.name, text, addRamndomEmote);
+    }
 }
 
 module.exports = TwitchChatMessage;
