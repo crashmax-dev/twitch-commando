@@ -20,17 +20,6 @@ class TwitchChatChannel
 
 
     /**
-     * Channel display name
-     * 
-     * @readonly
-     * @memberof TwitchCommandoClient
-     */
-    get username() {
-        return this.client.tmi.globaluserstate["display-name"];
-    }
-
-
-    /**
      * Channel name
      *
      * @readonly
