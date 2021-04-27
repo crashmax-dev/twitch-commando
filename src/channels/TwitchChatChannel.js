@@ -3,14 +3,14 @@
  * 
  * @class
  */
-class TwtichChatChannel
+class TwitchChatChannel
 {
 
     /**
-     * Creates an instance of TwtichChatChannel.
+     * Creates an instance of TwitchChatChannel.
      * @param {Object} originalMessage
      * @param {TwitchCommandoClient} client
-     * @memberof TwtichChatChannel
+     * @memberof TwitchChatChannel
      */
     constructor(originalMessage, client)
     {
@@ -23,7 +23,7 @@ class TwtichChatChannel
      * Channel name
      *
      * @readonly
-     * @memberof TwtichChatChannel
+     * @memberof TwitchChatChannel
      */
     get name()
     {
@@ -35,7 +35,7 @@ class TwtichChatChannel
      * Channel ID
      *
      * @readonly
-     * @memberof TwtichChatChannel
+     * @memberof TwitchChatChannel
      */
     get id()
     {
@@ -48,7 +48,7 @@ class TwtichChatChannel
      * 
      * @async
      * @param {String} text Message text
-     * @memberof TwtichChatChannel
+     * @memberof TwitchChatChannel
      */
     async say(text)
     {
@@ -56,4 +56,4 @@ class TwtichChatChannel
     }
 }
 
-module.exports = TwtichChatChannel;
+module.exports = TwitchChatChannel;

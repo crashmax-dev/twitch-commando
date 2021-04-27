@@ -2,7 +2,7 @@
 
 ### Table of Contents
 
--   [TwtichChatChannel][1]
+-   [TwitchChatChannel][1]
     -   [name][2]
     -   [id][3]
     -   [say][4]
@@ -49,7 +49,7 @@
     -   [whisper][45]
     -   [channel][46]
 
-## TwtichChatChannel
+## TwitchChatChannel
 
 Twitch Channel object
 
@@ -388,7 +388,7 @@ Get the user channel
 
 Returns **[String][49]** Channel name
 
-[1]: #twtichchatchannel
+[1]: #TwitchChatChannel
 
 [2]: #name
 
