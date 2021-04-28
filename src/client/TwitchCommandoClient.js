@@ -371,11 +371,15 @@ class TwitchCommandoClient extends EventEmitter {
   async onMessage(channel, userstate, messageText, self) {
     if (self) return;
 
-    var message = new TwitchChatMessage(userstate, channel, this);
+    var chatter = Object.assign(userstate, {
+      message: messageText
+    })
+
+    var message = new TwitchChatMessage(chatter, channel, this);
 
     if (this.verboseLogging) this.logger.info(message);
 
-    this.emit("message", message);
+    this.emit("message", chatter, message);
 
     var prefix = await this.settingsProvider.get(
       message.channel.name,
