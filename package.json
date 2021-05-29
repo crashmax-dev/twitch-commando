@@ -1,44 +1,25 @@
 {
-  "name": "twitch-commando",
-  "version": "1.0.12",
-  "description": "Twitch Bot Commando Client",
-  "main": "index.js",
-  "scripts": {
-    "test": "node test.js",
-    "test-dev": "node test-private.js",
-    "docs": "documentation build src/** -f html -o docs",
-    "docs-md": "documentation build src/** -f md -o docs.md",
-    "docs-all": "npm run docs-md && npm run docs"
-  },
-  "repository": {
-    "type": "github",
-    "url": "https://github.com/shardick/twitch-commando"
-  },
-  "contributors": [
-    "Cyber_Star"
-  ],
-  "keywords": [
-    "twitch",
-    "bot",
-    "chatbot",
-    "chat",
-    "commando"
-  ],
-  "author": "Francesco 'ShArDiCk' Bramato",
-  "license": "ISC",
-  "dependencies": {
-    "better-queue": "^3.8.10",
-    "express": "^4.17.1",
-    "node-fetch": "^2.6.0",
-    "recursive-readdir-sync": "^1.0.6",
-    "recursive-readdir-synchronous": "0.0.4",
-    "sleep": "^6.1.0",
-    "sqlite": "^3.0.3",
-    "tmi.js": "^1.5.0",
-    "winston": "^3.2.1"
-  },
-  "devDependencies": {
-    "clean-documentation-theme": "^0.5.2",
-    "jsdoc": "^3.6.3"
-  }
+    "name": "twitch-core",
+    "version": "1.0.0",
+    "description": "twitch core",
+    "main": "src/index.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "nodemon"
+    },
+    "devDependencies": {
+        "@types/node": "^15.6.1",
+        "@types/node-fetch": "^2.5.10",
+        "@types/tmi.js": "^1.7.1",
+        "dotenv": "^10.0.0",
+        "ts-node": "^10.0.0",
+        "typescript": "^4.3.2"
+    },
+    "dependencies": {
+        "node-fetch": "^2.6.1",
+        "recursive-readdir-sync": "^1.0.6",
+        "sqlite": "^4.0.23",
+        "tmi.js": "^1.8.3",
+        "winston": "^3.3.3"
+    }
 }

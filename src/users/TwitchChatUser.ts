@@ -1,0 +1,99 @@
+import { ChatUserstate } from 'tmi.js'
+import { TwitchCommandClient } from '../client/TwitchCommandClient'
+
+class TwitchChatUser {
+    private originalMessage: ChatUserstate
+    private client: TwitchCommandClient
+
+    constructor(originalMessage: ChatUserstate, client: TwitchCommandClient) {
+        this.originalMessage = originalMessage
+        this.client = client
+    }
+
+    /**
+     * Get display-name
+     */
+    get name() {
+        return this.originalMessage['display-name']
+    }
+
+    /**
+     * Get username
+     */
+    get username() {
+        return this.originalMessage.username
+    }
+
+    /**
+     * Get badges
+     */
+    get badges() {
+        return this.originalMessage.badges
+    }
+
+    /**
+     * Get user-id
+     */
+    get id() {
+        return this.originalMessage['user-id']
+    }
+
+    /**
+     * Get user-type on string
+     */
+    get userType() {
+        return this.originalMessage['user-type']
+    }
+
+    /**
+     * Whisper a message to the user
+     * @param message
+     */
+    async whisper(message: string) {
+        return this.client.whisper(this.username, message)
+    }
+
+    /**
+     * Get the user #channel
+     */
+    get channel() {
+        return '#' + this.username
+    }
+
+    /**
+     * Check if user is Turbo
+     */
+    get isTurbo() {
+        return this.originalMessage.turbo
+    }
+
+    /**
+     * Check if user is the channel vip
+     */
+    get isVip() {
+        return this.badges?.vip === '1'
+    }
+
+    /**
+     * Check if user is the channel broadcaster
+     */
+    get isBroadcaster() {
+        return this.badges?.broadcaster === '1'
+    }
+
+    /**
+     * Check if user is the channel subscriber
+     */
+    get isSubscriber() {
+        return this.badges?.subscriber === '1'
+    }
+
+    /**
+     * Check if user is the channel moderator
+     */
+    get isModerator() {
+        return this.badges?.moderator === '1'
+    }
+}
+
+export { TwitchChatUser }
