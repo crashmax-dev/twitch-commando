@@ -1,12 +1,32 @@
 {
     "name": "twitch-core",
     "version": "1.0.0",
-    "description": "twitch core",
-    "main": "src/index.ts",
+    "description": "Twitch bot command client",
+    "main": "dist/index.ts",
+    "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc",
         "test": "nodemon"
     },
+    "keywords": [
+        "twitch",
+        "bot",
+        "chatbot"
+    ],
+    "author": {
+        "url": "https://crashmax.ru",
+        "email": "sys@crashmax.ru",
+        "name": "Vitalij Ryndin"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/crashmax-dev/twitch-core.git"
+    },
+    "bugs": {
+        "url": "https://github.com/crashmax-dev/twitch-core/issues"
+    },
+    "homepage": "https://github.com/crashmax-dev/twitch-core",
     "devDependencies": {
         "@types/node": "^15.6.1",
         "@types/node-fetch": "^2.5.10",
