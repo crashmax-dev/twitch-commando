@@ -1,23 +1,21 @@
-import path, { resolve } from 'path'
+import path from 'path'
 import sqlite from 'sqlite'
 import { ChatUserstate } from 'tmi.js'
-import { CommandSQLiteProvider, TwitchCommandClient } from '../src'
+import { TwitchCommandClient, CommandSQLiteProvider } from '../src'
 import { Logger } from './logger'
 
 import dotenv from 'dotenv'
 dotenv.config()
 
 const client = new TwitchCommandClient({
-    username: process.env.USERNAME,
+    username: process.env.BOT_USERNAME,
     oauth: process.env.OAUTH_KEY,
     channels: [process.env.CHANNEL],
-    verboseLogging: true,
-    autoJoinBotChannel: false
+    verboseLogging: true
 })
 
 client.logger = Logger('main')
 
-// TODO: Extend ChatUserstate
 client.on('message', (chatter: ChatUserstate) => {
     console.log(chatter)
 })

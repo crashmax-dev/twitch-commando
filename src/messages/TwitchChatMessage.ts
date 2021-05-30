@@ -13,13 +13,7 @@ class TwitchChatMessage {
     constructor(originalMessage: ChatUserstate, channel: string, client: TwitchCommandClient) {
         this.client = client
         this.originalMessage = originalMessage
-
-        this._channel = new TwitchChatChannel({
-            channel,
-            username: originalMessage.username,
-            room_id: originalMessage['room-id']
-        }, client)
-
+        this._channel = new TwitchChatChannel({ channel, room_id: originalMessage['room-id'] }, client)
         this._author = new TwitchChatUser(originalMessage, client)
         this._timestamp = new Date()
     }

@@ -2,7 +2,6 @@ import { TwitchCommandClient } from '../client/TwitchCommandClient'
 
 interface ChatChannel {
     channel: string
-    username: string
     room_id?: string
 }
 
@@ -16,16 +15,9 @@ class TwitchChatChannel {
     }
 
     /**
-     * Get username
+     * Get channel name
      */
     get name() {
-        return this.originalMessage.username
-    }
-
-    /**
-     * Get channel
-     */
-    get channel() {
         return this.originalMessage.channel
     }
 
@@ -34,13 +26,6 @@ class TwitchChatChannel {
      */
     get id() {
         return this.originalMessage.room_id
-    }
-
-    /**
-     * Send text message in the channel
-     */
-    async say(text: string) {
-        this.client.say(this.channel, text)
     }
 }
 

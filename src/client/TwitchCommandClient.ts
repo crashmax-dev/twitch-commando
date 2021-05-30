@@ -1,6 +1,5 @@
 import tmi, { Client, ChatUserstate } from 'tmi.js'
 import EventEmitter from 'events'
-// @ts-ignore
 import readdir from 'recursive-readdir-sync'
 import winston, { createLogger, format, transports } from 'winston'
 const { combine, timestamp, simple, splat, colorize } = format
@@ -12,7 +11,7 @@ import { CommandParser, CommandParserResult } from '../commands/CommandParser'
 import { TwitchChatUser } from '../users/TwitchChatUser'
 import { TwitchChatChannel } from '../channels/TwitchChatChannel'
 import { TwitchChatMessage } from '../messages/TwitchChatMessage'
-import { TwitchChatCommand, CommandOptions } from '../commands/TwitchChatCommand'
+import { TwitchChatCommand } from '../commands/TwitchChatCommand'
 
 interface ClientOptions {
     /**
@@ -56,7 +55,7 @@ interface ClientOptions {
     onJoinMessage?: string
 
     /**
-     * Denotes if the bot must autojoin its own channel (default: true)
+     * Denotes if the bot must autojoin its own channel (default: false)
      */
     autoJoinBotChannel?: boolean
 
@@ -98,23 +97,19 @@ class TwitchCommandClient extends EventEmitter {
         super()
 
         const defaultOptions = {
-            enableVerboseLogging: false,
-            // @ts-ignore
-            channels: [],
             prefix: '!',
-            greetOnJoin: false,
-            onJoinMessage: '',
-            // @ts-ignore
+            channels: [],
             botOwners: [],
-            autoJoinBotChannel: true,
+            onJoinMessage: '',
+            greetOnJoin: false,
+            autoJoinBotChannel: false,
             enableJoinCommand: true,
-            botType: CommandConstants.BOT_TYPE_NORMAL,
-            enableRateLimitingControl: true
+            enableVerboseLogging: false,
+            enableRateLimitingControl: true,
+            botType: CommandConstants.BOT_TYPE_NORMAL
         }
 
-        options = Object.assign(defaultOptions, options)
-
-        this.options = options
+        this.options = Object.assign(defaultOptions, options)
         this.tmi = null
         this.verboseLogging = this.options.enableVerboseLogging
         this.commands = []
@@ -344,7 +339,7 @@ class TwitchCommandClient extends EventEmitter {
      * @param username
      */
     onJoin(channel: string, username: string) {
-        const channelObject = new TwitchChatChannel({ channel, username }, this)
+        const channelObject = new TwitchChatChannel({ channel }, this)
 
         if (
             this.options.greetOnJoin &&
@@ -388,7 +383,7 @@ class TwitchCommandClient extends EventEmitter {
 
         if (this.verboseLogging) this.logger.info(message)
 
-        this.emit('message', chatter, message)
+        this.emit('message', chatter)
 
         // TODO: SettingsProvider
         // const prefix = await this.settingsProvider.get(
