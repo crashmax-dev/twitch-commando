@@ -144,4 +144,4 @@ class TwitchChatCommand {
     }
 }
 
-export { TwitchChatCommand, CommandOptions }
+export { TwitchChatCommand, CommandOptions, CommandArgument, UserLevels }
