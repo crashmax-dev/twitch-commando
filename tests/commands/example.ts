@@ -1,30 +1,8 @@
-import { TwitchChatCommand, TwitchCommandClient, TwitchChatMessage } from '../../src'
+import { TwitchChatCommand, TwitchCommandClient, TwitchChatMessage, CommandOptions } from '../../src'
 
 class Example extends TwitchChatCommand {
-    constructor(client: TwitchCommandClient) {
-        super(client, {
-            name: 'example',
-            group: 'system',
-            description: 'Пример команды',
-            userlevel: 'everyone',
-            examples: [
-                '!example',
-                '!example <arg1>',
-                '!example <arg1> <arg2>'
-            ],
-            args: [
-                {
-                    name: 'arg1',
-                    type: String,
-                    defaultValue: 'example'
-                },
-                {
-                    name: 'arg2',
-                    type: Number,
-                    defaultValue: 22
-                }
-            ]
-        })
+    constructor(client: TwitchCommandClient, options: CommandOptions) {
+        super(client, options)
     }
 
     // async run(msg: TwitchChatMessage, { arg1, arg2 }) { }

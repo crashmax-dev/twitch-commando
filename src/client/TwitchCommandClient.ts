@@ -11,7 +11,7 @@ import { CommandParser, CommandParserResult } from '../commands/CommandParser'
 import { TwitchChatUser } from '../users/TwitchChatUser'
 import { TwitchChatChannel } from '../channels/TwitchChatChannel'
 import { TwitchChatMessage } from '../messages/TwitchChatMessage'
-import { TwitchChatCommand } from '../commands/TwitchChatCommand'
+import { TwitchChatCommand, ExternalCommandOptions } from '../commands/TwitchChatCommand'
 
 interface ClientOptions {
     /**
@@ -286,21 +286,36 @@ class TwitchCommandClient extends EventEmitter {
 
     /**
      * Register commands in given path (recursive)
-     *
+     * 
      * @param path
+     * @param options
      */
-    registerCommandsIn(path: string) {
+    registerCommandsIn(path: string, options?: ExternalCommandOptions) {
         const files = readdir(path)
+
+        if (options) {
+            this.logger.info(`External command options: ${Object.keys(options).length}`)
+        }
 
         files.forEach(async (file: string) => {
             const { default: commandFile } = await import(file)
 
             if (typeof commandFile === 'function') {
-                const command: TwitchChatCommand = new commandFile(this)
+                const name: string = commandFile.name
 
-                this.logger.info(`Register command ${command.options.group}:${command.options.name}`)
+                if (options) {
+                    if (options[name]) {
+                        this.commands.push(new commandFile(this, options[name]))
+                    } else {
+                        this.logger.warn(`${commandFile.name} config is not found`)
+                    }
+                } else {
+                    this.commands.push(new commandFile(this))
+                }
 
-                this.commands.push(command)
+                this.logger.info(`Register command ${name}`)
+            } else {
+                this.logger.warn('You are not exporting the class correctly!\nUse ES6 - `export default` or CommonJS - `module.exports`')
             }
         }, this)
 

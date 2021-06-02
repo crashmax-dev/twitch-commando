@@ -20,7 +20,16 @@ client.on('message', (chatter: ChatUserstate) => {
     console.log(chatter)
 })
 
-client.registerCommandsIn(path.join(__dirname, 'commands'))
+const ExternalConfig = {
+    Example: {
+        name: 'example',
+        group: 'system',
+        userlevel: 'everyone',
+        description: 'Пример команды'
+    }
+}
+
+client.registerCommandsIn(path.join(__dirname, 'commands'), ExternalConfig)
 
 // TODO: SettingsProvider
 // client.setProvider(

@@ -33,6 +33,10 @@ type NamedParameters = {
     [key: string]: string | number
 }
 
+type ExternalCommandOptions = {
+    [key in symbol]: CommandOptions
+}
+
 class TwitchChatCommand {
     readonly options: CommandOptions
     readonly client: TwitchCommandClient
@@ -64,6 +68,7 @@ class TwitchChatCommand {
                 if (parameters[i] !== undefined) {
                     namedParameters[this.options.args[i].name] = parameters[i]
                 } else {
+                    // TODO: defaultValue & type
                     if (this.options.args[i].defaultValue !== undefined) {
                         namedParameters[this.options.args[i].name] = this.options.args[i].defaultValue
                     } else {
@@ -144,4 +149,4 @@ class TwitchChatCommand {
     }
 }
 
-export { TwitchChatCommand, CommandOptions, CommandArgument, UserLevels }
+export { TwitchChatCommand, CommandOptions, CommandArgument, ExternalCommandOptions }
