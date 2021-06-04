@@ -1,6 +1,7 @@
-import tmi, { Client, ChatUserstate } from 'tmi.js'
+import path from 'path'
 import EventEmitter from 'events'
-import readdir from 'recursive-readdir-sync'
+import tmi, { Client, ChatUserstate } from 'tmi.js'
+import readdir from 'recursive-readdir-synchronous'
 import winston, { createLogger, format, transports } from 'winston'
 const { combine, timestamp, simple, splat, colorize } = format
 
@@ -291,14 +292,14 @@ class TwitchCommandClient extends EventEmitter {
      * @param options
      */
     registerCommandsIn(path: string, options?: ExternalCommandOptions) {
-        const files = readdir(path)
+        const files = readdir(path, ['*.d.ts'])
 
         if (options) {
             this.logger.info(`External command options: ${Object.keys(options).length}`)
         }
 
-        files.forEach(async (file: string) => {
-            const { default: commandFile } = await import(file)
+        files.forEach((file: string) => {
+            const { default: commandFile } = require(file)
 
             if (typeof commandFile === 'function') {
                 const name: string = commandFile.name
@@ -315,21 +316,28 @@ class TwitchCommandClient extends EventEmitter {
 
                 this.logger.info(`Register command ${name}`)
             } else {
-                this.logger.warn('You are not exporting the class correctly!\nUse ES6 - `export default` or CommonJS - `module.exports`')
+                this.logger.warn('You are not exporting the class correctly!\nUse ES6 - `export default`')
             }
         }, this)
 
         this.parser = new CommandParser(this.commands, this)
     }
 
+    /**
+     * Register default commands
+     */
+    registerDetaultCommands() {
+        this.registerCommandsIn(path.join(__dirname, '../commands/default'))
+    }
+
     findCommand(parserResult: CommandParserResult) {
-        let command: TwitchChatCommand = null
+        let command: TwitchChatCommand
 
         this.commands.forEach(v => {
             if (parserResult.command === v.options.name) command = v
 
             if (
-                command === null &&
+                !command &&
                 v.options.aliases &&
                 v.options.aliases.length > 0
             ) {
@@ -410,12 +418,12 @@ class TwitchCommandClient extends EventEmitter {
 
         const parserResult = this.parser.parse(messageText, prefix)
 
-        if (parserResult !== null) {
+        if (parserResult) {
             if (this.verboseLogging) this.logger.info(parserResult)
 
             const command = this.findCommand(parserResult)
 
-            if (command !== null) {
+            if (command) {
                 const preValidateResponse = command.preValidate(message)
 
                 if (typeof preValidateResponse !== 'string') {
