@@ -402,10 +402,10 @@ class TwitchCommandClient extends EventEmitter {
         const message = new TwitchChatMessage(chatter, channel, this)
 
         if (message.author.username === this.getUsername()) {
-            if (!message.author.isBroadcaster ||
-                !message.author.isModerator ||
-                !message.author.isVip
-            ) {
+            if (!(message.author.isBroadcaster ||
+                message.author.isModerator ||
+                message.author.isVip
+            )) {
                 await new Promise((resolve) => setTimeout(resolve, 1000))
             }
         }
