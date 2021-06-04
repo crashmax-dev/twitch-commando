@@ -118,7 +118,7 @@ class TwitchChatCommand {
             if (!validationPassed
                 && this.client.options.botOwners != undefined
                 && this.client.options.botOwners.length > 0
-                && !this.client.options.botOwners.includes(msg.author.name)
+                && !this.client.options.botOwners.includes(msg.author.username)
             ) {
                 return 'Команда доступна только для проверенных пользователей'
             }

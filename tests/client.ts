@@ -11,7 +11,8 @@ const client = new TwitchCommandClient({
     username: process.env.BOT_USERNAME,
     oauth: process.env.OAUTH_KEY,
     channels: [process.env.CHANNEL],
-    verboseLogging: true
+    verboseLogging: true,
+    botOwners: ['vs_code']
 })
 
 client.logger = Logger('main')

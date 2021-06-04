@@ -398,18 +398,19 @@ class TwitchCommandClient extends EventEmitter {
     async onMessage(channel: string, userstate: ChatUserstate, messageText: string, self: boolean) {
         if (self) return
 
-        if (userstate.username === this.getUsername()) {
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-        }
-
-        const chatter = Object.assign(userstate, {
-            message: messageText
-        })
-
+        const chatter = { ...userstate, messsage: messageText }
         const message = new TwitchChatMessage(chatter, channel, this)
 
-        if (this.verboseLogging) this.logger.info(message)
+        if (message.author.username === this.getUsername()) {
+            if (!message.author.isBroadcaster ||
+                !message.author.isModerator ||
+                !message.author.isVip
+            ) {
+                await new Promise((resolve) => setTimeout(resolve, 1000))
+            }
+        }
 
+        if (this.verboseLogging) this.logger.info(message)
         this.emit('message', chatter)
 
         // TODO: SettingsProvider
@@ -419,7 +420,6 @@ class TwitchCommandClient extends EventEmitter {
         // )
 
         const prefix = this.options.prefix
-
         const parserResult = this.parser.parse(messageText, prefix)
 
         if (parserResult) {

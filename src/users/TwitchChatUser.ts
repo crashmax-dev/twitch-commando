@@ -13,7 +13,7 @@ class TwitchChatUser {
     /**
      * Get display-name
      */
-    get name() {
+    get displayName() {
         return this.originalMessage['display-name']
     }
 
@@ -85,14 +85,14 @@ class TwitchChatUser {
      * Check if user is the channel subscriber
      */
     get isSubscriber() {
-        return this.badges?.subscriber === '1'
+        return this.originalMessage.subscriber
     }
 
     /**
      * Check if user is the channel moderator
      */
     get isModerator() {
-        return this.badges?.moderator === '1'
+        return this.originalMessage.mod
     }
 }
 

@@ -84,7 +84,7 @@ class TwitchChatMessage {
         if (this.messageType === 'whisper') {
             return this.client.whisper(this.author.username, text)
         } else {
-            return this.client.say(this.channel.name, `@${this.author.name}, ${text}`, addRandomEmote)
+            return this.client.say(this.channel.name, `@${this.author.displayName}, ${text}`, addRandomEmote)
         }
     }
 
@@ -105,7 +105,7 @@ class TwitchChatMessage {
      * @param addRandomEmote
      */
     async actionReply(text: string, addRandomEmote = false) {
-        return this.client.action(this.channel.name, `@${this.author.name}, ${text}`, addRandomEmote)
+        return this.client.action(this.channel.name, `@${this.author.displayName}, ${text}`, addRandomEmote)
     }
 
     /**
