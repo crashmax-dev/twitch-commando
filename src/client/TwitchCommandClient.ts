@@ -299,7 +299,11 @@ class TwitchCommandClient extends EventEmitter {
         }
 
         files.forEach((file: string) => {
-            const { default: commandFile } = require(file)
+            let commandFile = require(file)
+
+            if (typeof commandFile.default === 'function') {
+                commandFile = commandFile.default
+            }
 
             if (typeof commandFile === 'function') {
                 const name: string = commandFile.name
@@ -316,7 +320,7 @@ class TwitchCommandClient extends EventEmitter {
 
                 this.logger.info(`Register command ${name}`)
             } else {
-                this.logger.warn('You are not exporting the class correctly!\nUse ES6 - `export default`')
+                this.logger.warn('You are not export default class correctly!')
             }
         }, this)
 
