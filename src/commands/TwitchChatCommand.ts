@@ -17,8 +17,8 @@ interface CommandOptions {
 
 interface CommandArgument {
     name: string
-    type: StringConstructor | NumberConstructor
-    defaultValue: string | number
+    type?: StringConstructor | NumberConstructor | BooleanConstructor
+    defaultValue?: string | number | boolean
 }
 
 type UserLevels =
@@ -30,7 +30,7 @@ type UserLevels =
     'broadcaster'
 
 type NamedParameters = {
-    [key: string]: string | number
+    [key: string]: string | number | boolean
 }
 
 type ExternalCommandOptions = {
@@ -52,7 +52,7 @@ class TwitchChatCommand {
      * @param msg
      * @param parameters
      */
-    async run(msg: TwitchChatMessage, parameters: NamedParameters | {}) { }
+    async run(msg: TwitchChatMessage, parameters: {}) { }
 
     /**
      * Prepare the command to be executed
@@ -65,11 +65,14 @@ class TwitchChatCommand {
 
         if (this.options.args && this.options.args.length > 0) {
             for (let i = 0; i < this.options.args.length; i++) {
-                if (parameters[i] !== undefined) {
-                    namedParameters[this.options.args[i].name] = parameters[i]
+                if (parameters[i]) {
+                    if (typeof this.options.args[i].type === 'function') {
+                        namedParameters[this.options.args[i].name] = this.options.args[i].type(parameters[i])
+                    } else {
+                        namedParameters[this.options.args[i].name] = parameters[i]
+                    }
                 } else {
-                    // TODO: defaultValue & type
-                    if (this.options.args[i].defaultValue !== undefined) {
+                    if (this.options.args[i].defaultValue) {
                         namedParameters[this.options.args[i].name] = this.options.args[i].defaultValue
                     } else {
                         namedParameters[this.options.args[i].name] = null

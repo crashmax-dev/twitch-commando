@@ -23,7 +23,11 @@ const ExternalConfig = {
         name: 'example',
         group: 'system',
         userlevel: 'everyone',
-        description: 'Пример команды'
+        description: 'Пример команды',
+        examples: [
+            '!example',
+            '!example <args>'
+        ]
     },
     Cat: {
         name: 'кот',
@@ -32,6 +36,8 @@ const ExternalConfig = {
         description: 'Фото кота'
     }
 }
+
+client.registerDetaultCommands()
 
 client.registerCommandsIn(path.join(__dirname, 'commands'), ExternalConfig)
 
