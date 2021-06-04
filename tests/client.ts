@@ -38,7 +38,7 @@ const ExternalConfig = {
     }
 }
 
-client.registerDetaultCommands()
+client.registerDefaultCommands()
 
 client.registerCommandsIn(path.join(__dirname, 'commands'), ExternalConfig)
 

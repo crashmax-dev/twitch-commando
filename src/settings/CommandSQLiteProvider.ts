@@ -1,5 +1,5 @@
 import { Database } from 'sqlite'
-import { SettingsProvider } from './SettingsPovider'
+import { SettingsProvider } from './SettingsProvider'
 import { TwitchCommandClient } from '../client/TwitchCommandClient'
 
 class CommandSQLiteProvider extends SettingsProvider {

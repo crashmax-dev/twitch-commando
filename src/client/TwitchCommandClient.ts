@@ -217,6 +217,8 @@ class TwitchCommandClient extends EventEmitter {
 
         this.tmi.on('message', this.onMessage.bind(this))
 
+        this.tmi.on('raided', this.onRaided.bind(this))
+
         await this.tmi.connect()
     }
 
@@ -330,7 +332,7 @@ class TwitchCommandClient extends EventEmitter {
     /**
      * Register default commands
      */
-    registerDetaultCommands() {
+    registerDefaultCommands() {
         this.registerCommandsIn(path.join(__dirname, '../commands/default'))
     }
 
@@ -381,7 +383,7 @@ class TwitchCommandClient extends EventEmitter {
     }
 
     /**
-     * Bot disonnects
+     * Bot disconnects
      */
     onDisconnect() {
         this.emit('disconnected')
@@ -446,6 +448,9 @@ class TwitchCommandClient extends EventEmitter {
             }
         }
     }
+
+    // TODO: ??
+    onRaided(action: any) { }
 
     // TODO: ???
     onAction(action: any) { }
