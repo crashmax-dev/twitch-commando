@@ -16,9 +16,7 @@ const client = new TwitchCommandClient({
 
 client.logger = Logger('main')
 
-client.on('message', (chatter: ChatUserstate) => {
-    console.log(chatter)
-})
+client.on('message', (chatter: ChatUserstate) => { })
 
 const ExternalConfig = {
     Example: {
@@ -26,6 +24,12 @@ const ExternalConfig = {
         group: 'system',
         userlevel: 'everyone',
         description: 'Пример команды'
+    },
+    Cat: {
+        name: 'кот',
+        group: 'system',
+        userlevel: 'everyone',
+        description: 'Фото кота'
     }
 }
 
