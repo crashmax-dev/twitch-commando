@@ -1,7 +1,6 @@
 import path from 'path'
 import sqlite from 'sqlite'
-import { ChatUserstate } from 'tmi.js'
-import { TwitchCommandClient, CommandSQLiteProvider } from '../src'
+import { TwitchCommandClient, CommandSQLiteProvider, TwitchChatCommand, ChatterState, TwitchChatMessage } from '../src'
 import { Logger } from './logger'
 
 import dotenv from 'dotenv'
@@ -17,7 +16,7 @@ const client = new TwitchCommandClient({
 
 client.logger = Logger('main')
 
-client.on('message', (chatter: ChatUserstate) => { })
+client.on('message', (msg: TwitchChatMessage, chatter: ChatterState) => { })
 
 const ExternalConfig = {
     Example: {

@@ -1,5 +1,5 @@
-import { TwitchCommandClient } from '../client/TwitchCommandClient'
 import { TwitchChatMessage } from '../messages/TwitchChatMessage'
+import { TwitchCommandClient, ChatterState } from '../client/TwitchCommandClient'
 
 interface CommandOptions {
     name: string
@@ -45,6 +45,14 @@ class TwitchChatCommand {
         this.options = options
         this.client = client
     }
+
+    /**
+     * Method called when executeCommand
+     * 
+     * @param msg
+     * @param chatter
+     */
+    async execute(msg: TwitchChatMessage, chatter: ChatterState) { }
 
     /**
      * Method called when command is executed

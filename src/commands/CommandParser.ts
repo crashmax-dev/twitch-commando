@@ -2,8 +2,8 @@ import { TwitchCommandClient } from '../client/TwitchCommandClient'
 
 interface CommandParserResult {
     command: string
-    prefix: string
-    args: string[] | []
+    prefix?: string
+    args?: string[] | []
 }
 
 class CommandParser {

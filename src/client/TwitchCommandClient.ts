@@ -81,6 +81,8 @@ interface ClientOptions {
     enableVerboseLogging?: boolean
 }
 
+type ChatterState = ChatUserstate & { message: string }
+
 class TwitchCommandClient extends EventEmitter {
     public options: ClientOptions
     private tmi: Client
@@ -355,6 +357,16 @@ class TwitchCommandClient extends EventEmitter {
     }
 
     /**
+     * Execute command method
+     * 
+     * @param command
+     */
+    executeCommandMethod(command: string, msg: TwitchChatMessage, chatter: ChatterState) {
+        const cmd = this.findCommand({ command })
+        cmd.execute(msg, chatter)
+    }
+
+    /**
      * Bot connected
      */
     onConnect() {
@@ -400,20 +412,20 @@ class TwitchCommandClient extends EventEmitter {
     async onMessage(channel: string, userstate: ChatUserstate, messageText: string, self: boolean) {
         if (self) return
 
-        const chatter = { ...userstate, messsage: messageText }
-        const message = new TwitchChatMessage(chatter, channel, this)
+        const chatter = { ...userstate, message: messageText } as ChatterState
+        const msg = new TwitchChatMessage(chatter, channel, this)
 
-        if (message.author.username === this.getUsername()) {
-            if (!(message.author.isBroadcaster ||
-                message.author.isModerator ||
-                message.author.isVip
+        if (msg.author.username === this.getUsername()) {
+            if (!(msg.author.isBroadcaster ||
+                msg.author.isModerator ||
+                msg.author.isVip
             )) {
                 await new Promise((resolve) => setTimeout(resolve, 1000))
             }
         }
 
-        if (this.verboseLogging) this.logger.info(message)
-        this.emit('message', chatter)
+        if (this.verboseLogging) this.logger.info(msg)
+        this.emit('message', msg, chatter)
 
         // TODO: SettingsProvider
         // const prefix = await this.settingsProvider.get(
@@ -430,20 +442,20 @@ class TwitchCommandClient extends EventEmitter {
             const command = this.findCommand(parserResult)
 
             if (command) {
-                const preValidateResponse = command.preValidate(message)
+                const preValidateResponse = command.preValidate(msg)
 
                 if (typeof preValidateResponse !== 'string') {
                     command
-                        .prepareRun(message, parserResult.args)
+                        .prepareRun(msg, parserResult.args)
                         .then(commandResult => {
                             this.emit('commandExecuted', commandResult)
                         })
                         .catch((err: string) => {
-                            message.reply('Unexpected error: ' + err)
+                            msg.reply('Unexpected error: ' + err)
                             this.emit('commandError', err)
                         })
                 } else {
-                    message.reply(preValidateResponse, true)
+                    msg.reply(preValidateResponse, true)
                 }
             }
         }
@@ -625,4 +637,4 @@ class TwitchCommandClient extends EventEmitter {
     }
 }
 
-export { TwitchCommandClient, ClientOptions }
+export { TwitchCommandClient, ClientOptions, ChatterState }
