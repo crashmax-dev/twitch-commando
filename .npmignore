@@ -5,3 +5,4 @@ tests/
 .env
 .env.example
 nodemon.json
+tsconfig.json
